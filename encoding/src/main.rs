@@ -1,5 +1,5 @@
 use rand::{thread_rng, Rng};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 fn main() {
 
@@ -49,11 +49,11 @@ fn main() {
     for command in instruct {
         let words: Vec<&str> = command.split_whitespace().collect();
         // another hasmap for employees is not necessary, but employees must be a vec
-        let dep = org.entry(String::from(words[3])).or_insert(Vec::<String>::new());
+        let dep = org.entry(String::from(words[3])).or_insert(HashSet::<String>::new());
         // i think i could make this faster by making it a hashset
         let employee: String = String::from(words[1]);
         if !dep.contains(&employee){
-            dep.push(employee);
+            dep.insert(employee);
         }
     }
 
