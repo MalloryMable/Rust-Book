@@ -1,7 +1,7 @@
 ### Explanation
 Each project/directory corosponds to one chapter of The Rust Book
 Code inside of projects serve roughly as notes on what was covered in the chapter as well as accesible examples for later use.
-###Note
+### Note
 Some modules use an example crate named rand-vec which produces a vector of random size with a set of random values.
 The vector returned is generic and bounded by the datatype passed to it
 I don't know why you would be running any of these programs, but if you are and rand-vec is required it will be denoted in a readme markdown file.
