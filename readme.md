@@ -1,4 +1,4 @@
-###Explanation
+### Explanation
 Each project/directory corosponds to one chapter of The Rust Book
 Code inside of projects serve roughly as notes on what was covered in the chapter as well as accesible examples for later use.
 ###Note
