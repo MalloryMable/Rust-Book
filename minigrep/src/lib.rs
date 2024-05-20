@@ -9,22 +9,21 @@ pub struct Config {
 }
 
 impl Config{
-    pub fn build(args: &[String]) -> Result<Config, &'static str> {
+    pub fn build(mut args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
 
-        match args.len() {
-            1 => return Err("No arguments passed"),
-            2 => return Err("No target file"),
-            3 => {},
-            _ => return Err("Too many arguments"),
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a query string"),
         };
 
-		    // NOTE: Find a non-clone solution
-		    let query = args[1].clone();
-		    let file_path = args[2].clone();
+        let file_path = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a file path"),
+        };
 
         let ignore_case = var("IGNORE_CASE").is_ok();
 
-		   Ok(Config { query, file_path, ignore_case})
+		    Ok(Config { query, file_path, ignore_case})
     }
 }
 
@@ -49,15 +48,11 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 
 fn search_sensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
-
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
-        }
-    }
+    contents
+        .lines()
+        .filter(|line| line.contains(query))
+        .collect()
     
-    results
 }
 
 fn search_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
